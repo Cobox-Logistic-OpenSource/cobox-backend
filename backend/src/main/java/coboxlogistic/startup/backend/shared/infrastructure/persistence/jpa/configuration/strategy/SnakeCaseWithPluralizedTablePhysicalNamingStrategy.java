@@ -9,7 +9,7 @@ import java.util.Locale;
 /**
  * Custom physical naming strategy for the Cobox Backend Platform.
  * Implements snake_case naming with pluralized table names following DDD conventions.
- * 
+ *
  * @author Cobox Team
  * @version 1.0
  */
@@ -17,41 +17,80 @@ public class SnakeCaseWithPluralizedTablePhysicalNamingStrategy extends Physical
 
     @Override
     public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
+        if (name == null) {
+            return null;
+        }
+
         String tableName = name.getText();
-        
+        if (tableName == null || tableName.isEmpty()) {
+            return name;
+        }
+
         // Convert to snake_case
         String snakeCaseName = toSnakeCase(tableName);
-        
+
         // Pluralize table names (simple implementation)
         String pluralizedName = pluralize(snakeCaseName);
-        
+
         return Identifier.toIdentifier(pluralizedName, name.isQuoted());
     }
 
     @Override
     public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment context) {
+        if (name == null) {
+            return null;
+        }
+
         String columnName = name.getText();
+        if (columnName == null || columnName.isEmpty()) {
+            return name;
+        }
+
         String snakeCaseName = toSnakeCase(columnName);
         return Identifier.toIdentifier(snakeCaseName, name.isQuoted());
     }
 
     @Override
     public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment context) {
+        if (name == null) {
+            return null;
+        }
+
         String sequenceName = name.getText();
+        if (sequenceName == null || sequenceName.isEmpty()) {
+            return name;
+        }
+
         String snakeCaseName = toSnakeCase(sequenceName);
         return Identifier.toIdentifier(snakeCaseName, name.isQuoted());
     }
 
     @Override
     public Identifier toPhysicalCatalogName(Identifier name, JdbcEnvironment context) {
+        if (name == null) {
+            return null;
+        }
+
         String catalogName = name.getText();
+        if (catalogName == null || catalogName.isEmpty()) {
+            return name;
+        }
+
         String snakeCaseName = toSnakeCase(catalogName);
         return Identifier.toIdentifier(snakeCaseName, name.isQuoted());
     }
 
     @Override
     public Identifier toPhysicalSchemaName(Identifier name, JdbcEnvironment context) {
+        if (name == null) {
+            return null;
+        }
+
         String schemaName = name.getText();
+        if (schemaName == null || schemaName.isEmpty()) {
+            return name;
+        }
+
         String snakeCaseName = toSnakeCase(schemaName);
         return Identifier.toIdentifier(snakeCaseName, name.isQuoted());
     }
@@ -93,7 +132,7 @@ public class SnakeCaseWithPluralizedTablePhysicalNamingStrategy extends Physical
         }
 
         String lowerSingular = singular.toLowerCase(Locale.ROOT);
-        
+
         // Common pluralization rules
         if (lowerSingular.endsWith("y") && !lowerSingular.endsWith("ay") && !lowerSingular.endsWith("ey") && !lowerSingular.endsWith("iy") && !lowerSingular.endsWith("oy") && !lowerSingular.endsWith("uy")) {
             return singular.substring(0, singular.length() - 1) + "ies";
@@ -109,4 +148,4 @@ public class SnakeCaseWithPluralizedTablePhysicalNamingStrategy extends Physical
             return singular + "s";
         }
     }
-} 
+}
