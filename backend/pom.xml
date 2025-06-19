@@ -44,14 +44,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- NUEVA: MySQL (comentada por ahora) -->
-		<!--
+
         <dependency>
            <groupId>com.mysql</groupId>
            <artifactId>mysql-connector-j</artifactId>
            <scope>runtime</scope>
         </dependency>
-        -->
 
 		<!-- NUEVA: OpenAPI Documentation -->
 		<dependency>
